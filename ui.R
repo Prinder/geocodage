@@ -6,25 +6,21 @@
 #
 
 library(shiny)
+library(shinydashboard)
 
-shinyUI(fluidPage(
-
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
-    ),
-
-    # Show a plot of the generated distribution
-    mainPanel(
-      plotOutput("distPlot")
+dashboardPage(
+  dashboardHeader(title = "géocodage"),
+  dashboardSidebar(disable = T),
+  dashboardBody(
+    fluidPage(
+      column(width=6,
+      numericInput("numero","Numero",min=1,max=10000,value = 1),
+      textInput("rue","Nom de la voie",value = ""),
+      textInput("ville","Nom de la ville",value = ""),
+      actionButton("recherche","Recherchez !")),
+      column(width=6,textOutput("adresse")),
+      hr(),
+      leafletOutput("map")
     )
   )
-))
+)
